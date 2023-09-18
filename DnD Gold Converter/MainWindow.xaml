@@ -3,10 +3,119 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:DnD_Gold_Converter"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:BoolToGridLengthConverter x:Key="BoolToGridLengthConverter" VisibleLength="*"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <local:WalletVM/>
+    </Window.DataContext>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="137*"/>
+            <RowDefinition Height="80*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Current Wealth:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Grid HorizontalAlignment="Center" Height="228" Margin="0,36,0,0" VerticalAlignment="Top" Width="120">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="{Binding UseElectrum, Converter={StaticResource BoolToGridLengthConverter}, Mode=OneWay}"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Content="Platinum:" HorizontalAlignment="Left" Margin="10,0,0,0" Padding="1" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Margin="10,0,10,0" TextWrapping="Wrap" Text="{Binding CurPlat, UpdateSourceTrigger=PropertyChanged, TargetNullValue={x:Static system:String.Empty}}" VerticalAlignment="Center" PreviewTextInput="NumberBox_PreviewTextInput" DataObject.Pasting="NumberBox_PastingEvent"/>
+
+            <Label Grid.Row="1" Content="Gold:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="10,0,10,0" TextWrapping="Wrap" Text="{Binding CurGold, UpdateSourceTrigger=PropertyChanged, TargetNullValue={x:Static system:String.Empty}}" VerticalAlignment="Center" PreviewTextInput="NumberBox_PreviewTextInput" DataObject.Pasting="NumberBox_PastingEvent"/>
+
+            <Label Grid.Row="2" Content="Electrum:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="10,0,10,0" TextWrapping="Wrap" Text="{Binding CurElec, UpdateSourceTrigger=PropertyChanged, TargetNullValue={x:Static system:String.Empty}}" VerticalAlignment="Center" PreviewTextInput="NumberBox_PreviewTextInput" DataObject.Pasting="NumberBox_PastingEvent"/>
+
+            <Label Grid.Row="3" Content="Silver:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Margin="10,0,10,0" TextWrapping="Wrap" Text="{Binding CurSilv, UpdateSourceTrigger=PropertyChanged, TargetNullValue={x:Static system:String.Empty}}" VerticalAlignment="Center" PreviewTextInput="NumberBox_PreviewTextInput" DataObject.Pasting="NumberBox_PastingEvent"/>
+
+            <Label Grid.Row="4" Content="Copper:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Margin="10,0,10,0" TextWrapping="Wrap" Text="{Binding CurCopp, UpdateSourceTrigger=PropertyChanged, TargetNullValue={x:Static system:String.Empty}}" VerticalAlignment="Center" PreviewTextInput="NumberBox_PreviewTextInput" DataObject.Pasting="NumberBox_PastingEvent"/>
+        </Grid>
+
+
+        <Label Content="Total Wealth:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="2"/>
+        <Grid HorizontalAlignment="Center" Height="228" Margin="0,36,0,0" VerticalAlignment="Top" Width="120" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="{Binding UseElectrum, Converter={StaticResource BoolToGridLengthConverter}, Mode=OneWay}"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Content="Platinum:" HorizontalAlignment="Left" Margin="10,0,0,0" Padding="1" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Margin="10,0,10,0" TextWrapping="Wrap" Text="{Binding TotPlat}" VerticalAlignment="Center" IsReadOnly="True"/>
+
+            <Label Grid.Row="1" Content="Gold:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="10,0,10,0" TextWrapping="Wrap" Text="{Binding TotGold}" VerticalAlignment="Center" IsReadOnly="True"/>
+
+            <Label Grid.Row="2" Content="Electrum:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="10,0,10,0" TextWrapping="Wrap" Text="{Binding TotElec}" VerticalAlignment="Center" IsReadOnly="True"/>
+
+            <Label Grid.Row="3" Content="Silver:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Margin="10,0,10,0" TextWrapping="Wrap" Text="{Binding TotSilv}" VerticalAlignment="Center" IsReadOnly="True"/>
+
+            <Label Grid.Row="4" Content="Copper:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Margin="10,0,10,0" TextWrapping="Wrap" Text="{Binding TotCopp}" VerticalAlignment="Center" IsReadOnly="True"/>
+        </Grid>
+
+
+        <Label Content="Random Wealth:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="3"/>
+        <Grid HorizontalAlignment="Center" Height="228" Margin="0,36,0,0" VerticalAlignment="Top" Width="120" Grid.Column="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="{Binding UseElectrum, Converter={StaticResource BoolToGridLengthConverter}, Mode=OneWay}"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Content="Platinum:" HorizontalAlignment="Left" Margin="10,0,0,0" Padding="1" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Margin="10,0,10,0" TextWrapping="Wrap" Text="{Binding RanPlat}" VerticalAlignment="Center" IsReadOnly="True"/>
+
+            <Label Grid.Row="1" Content="Gold:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="10,0,10,0" TextWrapping="Wrap" Text="{Binding RanGold}" VerticalAlignment="Center" IsReadOnly="True"/>
+
+            <Label Grid.Row="2" Content="Electrum:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="10,0,10,0" TextWrapping="Wrap" Text="{Binding RanElec}" VerticalAlignment="Center" IsReadOnly="True"/>
+
+            <Label Grid.Row="3" Content="Silver:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Margin="10,0,10,0" TextWrapping="Wrap" Text="{Binding RanSilv}" VerticalAlignment="Center" IsReadOnly="True"/>
+
+            <Label Grid.Row="4" Content="Copper:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Margin="10,0,10,0" TextWrapping="Wrap" Text="{Binding RanCopp}" VerticalAlignment="Center" IsReadOnly="True"/>
+        </Grid>
+
+        <CheckBox Content="Use Electrum" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" IsChecked="{Binding UseElectrum}"/>
+        <Button Grid.Column="3" Content="Re-roll" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100" Command="{Binding RandomizeCommand, Mode=OneWay}"/>
+
     </Grid>
 </Window>

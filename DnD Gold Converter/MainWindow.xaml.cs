@@ -1,28 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DnD_Gold_Converter
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
-    }
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
+	public partial class MainWindow : Window
+	{
+		public MainWindow()
+		{
+			InitializeComponent();
+		}
+
+		private static readonly Regex _regex = new Regex("[^0-9]+");
+		private static bool TextContainsNonNumbers(string text)
+		{
+			return _regex.IsMatch(text);
+		}
+
+		private void NumberBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			e.Handled = TextContainsNonNumbers(e.Text);
+		}
+
+		private void NumberBox_PastingEvent(object sender, DataObjectPastingEventArgs e)
+		{
+			string text = (string)e.DataObject.GetData(typeof(string));
+			if (text != null)
+			{
+				if (TextContainsNonNumbers(text))
+				{
+					e.CancelCommand();
+				}
+			}
+			else
+			{
+				e.CancelCommand();
+			}
+		}
+	}
 }
